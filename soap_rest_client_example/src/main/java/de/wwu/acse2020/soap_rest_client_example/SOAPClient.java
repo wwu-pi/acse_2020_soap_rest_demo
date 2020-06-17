@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
-import org.springframework.ws.soap.client.core.SoapActionCallback;
 
 import de.wwu.acse2020.soap_rest_client_example.soap_generated.AddRequest;
 import de.wwu.acse2020.soap_rest_client_example.soap_generated.AddResponse;
@@ -13,7 +12,6 @@ import de.wwu.acse2020.soap_rest_client_example.soap_generated.MySum;
 public class SOAPClient extends WebServiceGatewaySupport {
 	
 	public static final String URL = "http://localhost:8080/ws";
-	public static final String ENDPOINT = URL + "/adder";
 	
 	// Run exemplary client
 	public static void main(String[] args) throws MalformedURLException {
@@ -45,11 +43,7 @@ public class SOAPClient extends WebServiceGatewaySupport {
 		request.setN2(i2);
 		AddResponse response = 
 				(AddResponse) getWebServiceTemplate()
-					.marshalSendAndReceive(
-							ENDPOINT, 
-							request, 
-							new SoapActionCallback("soap.soap_rest_example.acse2020.wwu.de/addRequest")
-					);
+					.marshalSendAndReceive(request); // We use the default Uri
 		return response;
 	}
 }
